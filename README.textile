@@ -1,25 +1,17 @@
-h1. OAuthClient Plugin for Joyent Smart Platform Sammy v1.0
+h1. OAuthClient Plugin for Joyent Smart Platform Sammy
 
-Created by: Matt Constantine (@thismatt on twitter, designmc at gmail, matt20120 on aim)
-
-With heavy lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.
+Version: 0.1
+Created by: Matt Constantine (@thismatt on twitter, designmc at gmail, matt20120 on aim) with heavy oauth lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.
 
 h2. Prerequisites
 
-You'll need to include HMAC in your rsp.conf file in order for this to work. To
-enable, just append 'HMAC' (without quotes) to the rsp.conf extensions line.
-On a mac your rsp.conf is likely located at: /Applications/Smart.app/Contents/Resources/Image/etc/rsp.conf
+You'll need to include HMAC in your rsp.conf file in order for this to work. To enable, just append 'HMAC' (without quotes) to the rsp.conf extensions line. On a mac your rsp.conf is likely located at: /Applications/Smart.app/Contents/Resources/Image/etc/rsp.conf
 
-Optionally, you can use the provided sha1.js but you'll likely need up raise the rsp.conf
-oplimit to 200000.
+Optionally, you can use the provided sha1.js but you'll likely need up raise the rsp.conf oplimit to 200000.
 
-h2. description
+h2. Description
 
-This plugin produces two Sammy rules connected to two paths of your choosing. One rule
-kicks off the process, sending a visitor to Twitter (for example) for verification.
-The second rule serves as the redirect target for Twitter for authenticated users.
-From there, we save the details provided in the redirect body in the user model
-you provide. We also save the id of the newly created model in session.person_id.
+This plugin produces two Sammy rules connected to two paths of your choosing. One rule kicks off the process, sending a visitor to Twitter (for example) for verification. The second rule serves as the redirect target for Twitter for authenticated users. From there, we save the details provided in the redirect body in the user model you provide. We also save the id of the newly created model in session.person_id.
 
 h2. Usage, or, Twitter Authentication in 7 Easy Steps.
 
@@ -42,17 +34,15 @@ h2. Usage, or, Twitter Authentication in 7 Easy Steps.
       requestTokenURL       : "http://twitter.com/oauth/request_token",
       userAuthorizationURL  : "http://twitter.com/oauth/authorize",
       accessTokenURL        : "http://twitter.com/oauth/access_token", 
-      requestTokenFailed    : function(){ return "Sorry. We sorta messed up your sign-in. Could you go back a page and give it another go?"},
-      accessTokenFailed     : function(){ return "Sorry. We sorta messed up your sign-in. Could you go back a page and give it another go?"}
+      requestTokenFailed    : function(){ return "Sorry. We could not complete your sign in."},
+      accessTokenFailed     : function(){ return "Sorry. We could not complete your sign in."}
   })
 </code>
 </pre>
 
-3) Fill in the consumerKey and consumerSecret with the values you get from your provider.
-   For Twitter, go to http://twitter.com/oauth_clients
+3) Fill in the consumerKey and consumerSecret with the values you get from your provider. For Twitter, go to http://twitter.com/oauth_clients
 
-4) When you register a new application on twitter, they ask for the Callback URL. Make
-   sure it and callbackPath refer to the same place.
+4) When you register a new application on twitter, they ask for the Callback URL. Make sure it and callbackPath refer to the same place.
 
 5) Make a link that points to the loginPath. Example:
 
@@ -76,8 +66,7 @@ h2. Usage, or, Twitter Authentication in 7 Easy Steps.
 </code>
 </pre>
 
-7) Deploy. You'll need a live server to test this on. But hey, Smart Platform deployment is 
-   easy, right? Twitter currently doesn't accept localhost as a valid callback.
+7) Deploy. You'll need a live server to test this on. But hey, Smart Platform deployment is easy, right? Twitter currently doesn't accept localhost as a valid callback.
 
 8) ...
 
@@ -85,6 +74,4 @@ h2. Usage, or, Twitter Authentication in 7 Easy Steps.
 
 h2. Additional Services
 
-Currently this plugin has only been tested with Twitter. The underlying oauth.j lib has been tested with more
-services. If you need OAuth for additional services, just follow the same steps above (you'll have one OAuth.initialize for each service), but change the loginPath, callbackPath to something unique, then proceed as
-you were.
+Currently this plugin has only been tested with Twitter. The underlying oauth.j lib has been tested with more services. If you need OAuth for additional services, just follow the same steps above (you'll have one OAuth.initialize for each service), but change the loginPath, callbackPath to something unique, then proceed as you were.
