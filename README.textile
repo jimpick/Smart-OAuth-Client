@@ -3,6 +3,8 @@ h1. OAuthClient Plugin for Joyent Smart Platform Sammy
 Version: 0.1
 Created by: Matt Constantine (@thismatt on twitter, designmc at gmail, matt20120 on aim) with heavy oauth lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.
 
+Live example: http://think.smart.joyent.com/
+
 h2. Prerequisites
 
 You'll need to include HMAC in your rsp.conf file in order for this to work. To enable, just append 'HMAC' (without quotes) to the rsp.conf extensions line. On a mac your rsp.conf is likely located at: /Applications/Smart.app/Contents/Resources/Image/etc/rsp.conf
