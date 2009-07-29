@@ -4,8 +4,8 @@
   Includes the NetFlix OAuth javascript client. See oauth.js for the license.
 */
 
-system.use("mconstantine.oauth");
-system.use("mconstantine.sha1");
+system.use("oauth-client.oauth");
+system.use("oauth-client.sha1");
 
 OAuthClient = {
   
