@@ -1,9 +1,9 @@
 h1. OAuthClient Plugin for Joyent Smart Platform Sammy
 
 Version: 0.1
-Created by: Matt Constantine (@thismatt on twitter, designmc at gmail, matt20120 on aim) with heavy oauth lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.
+Created by: Matt Constantine (@thismatt on twitter, designmc at gmail, matt20120 on aim) with heavy oauth lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.  Additional modifications by Jim Pick (@jimpick on twitter/identica, jim@joyent.com)
 
-Live example: <a href="http://think.smart.joyent.com/">http://think.smart.joyent.com/</a>
+Live example: <a href="http://oauth-test1.jimpick.com/">http://oauth-test1.jimpick.com/</a>
 
 h2. Prerequisites
 
@@ -19,26 +19,67 @@ h2. Usage, or, Twitter Authentication in 7 Easy Steps.
 
 1) git submodule add git://github.com/jpick/Smart-OAuth-Client.git js/oauth-client
 
-2) In the file where you define your Sammy rules add the following:
+2) Here is a js/bootstrap.js with a trivial demo:
 
 <pre>
 <code>
-  system.use("oauth-client.OAuthClient")
+// Example code is public domain - Jim Pick
+system.use("com.joyent.Sammy");
+system.use("com.joyent.Resource");
+system.use("oauth-client.OAuthClient");
+enable("Sessions");
 
-  OAuthClient.initialize({
-      model                 : Person,           // which model to store the user info from the provider.
-      consumerKey           : "your key",
-      consumerSecret        : "your secret",
-      loginPath             : "/authorize/",    // where the 'login' link points to.
-      callbackPath          : "/authorized/",   // path you give the service provider to redirect to after sign in.
-      returnPath            : "/welcome",       // path we redirect to from callbackPath
-      signatureMethod       : "HMAC-SHA1",
-      requestTokenURL       : "http://twitter.com/oauth/request_token",
-      userAuthorizationURL  : "http://twitter.com/oauth/authorize",
-      accessTokenURL        : "http://twitter.com/oauth/access_token", 
-      requestTokenFailed    : function(){ return "Sorry. We could not complete your sign in."},
-      accessTokenFailed     : function(){ return "Sorry. We could not complete your sign in."}
-  })
+var Person = new Resource('person');
+
+OAuthClient.initialize({
+  model                 : Person,    // which model to store the
+                                     // user info from the provider.
+  consumerKey           : "your key",
+  consumerSecret        : "your secret",
+  loginPath             : "/authorize/",  // where the 'login' link points to.
+  callbackPath          : "/authorized/", // path you give the service provider
+                                          // to redirect to after sign in.
+  returnPath            : "/welcome",     // path we redirect to from
+                                          // callbackPath
+  signatureMethod       : "HMAC-SHA1",
+  requestTokenURL       : "http://twitter.com/oauth/request_token",
+  userAuthorizationURL  : "http://twitter.com/oauth/authorize",
+  accessTokenURL        : "http://twitter.com/oauth/access_token", 
+  requestTokenFailed    : function() {
+    return "Sorry. We could not complete your sign in."
+  },
+  accessTokenFailed     : function() {
+    return "Sorry. We could not complete your sign in."
+  }
+})
+
+GET("/", function() {
+  var hmac = system.digest.hmac == null ? 'not present' : 'present';
+  var page = <html>
+    <head>
+      <title>OAuth Test</title>
+    </head>
+    <body>
+      <h2><a href='/authorize/'>Log in through Twitter</a></h2>
+      <small>system.digest.hmac is {hmac}</small>
+    </body>
+  </html>
+  return page.toString();
+});
+
+GET("/welcome", function() {
+  var person = Person.get( this.session.person_id );
+  var page = <html>
+    <head>
+      <title>OAuth Test - Success!</title>
+    </head>
+    <body>
+      <h1>Welcome {person.screen_name}!</h1>
+      <p>It worked! You've just logged in through Twitter.</p>
+    </body>
+  </html>
+  return page.toString();
+})
 </code>
 </pre>
 
@@ -46,33 +87,11 @@ h2. Usage, or, Twitter Authentication in 7 Easy Steps.
 
 4) When you register a new application on twitter, they ask for the Callback URL. Make sure it and callbackPath refer to the same place.
 
-5) Make a link that points to the loginPath. Example:
+5) Deploy. You'll need a live server to test this on. But hey, Smart Platform deployment is easy, right? Twitter currently doesn't accept localhost as a valid callback.
 
-<pre>
-<code>
-   GET("/", function() {
-     return "&lt;a href=&#x27;/authorize/&#x27;&gt;Log in through Twitter&lt;/a&gt;"
-   })
-</code>
-</pre>
+6) ...
 
-  
-6) Make a page that recieves the newly authorized visitor:
-
-<pre>
-<code>
-   Res.get("/welcome", function() {
-     current_person = Person.get( this.session.person_id )
-     return "&lt;h1&gt;Welcome @&quot; + current_person.screen_name + &quot;!&lt;/h1&gt;"
-   })
-</code>
-</pre>
-
-7) Deploy. You'll need a live server to test this on. But hey, Smart Platform deployment is easy, right? Twitter currently doesn't accept localhost as a valid callback.
-
-8) ...
-
-9) Profit.
+7) Profit.
 
 h2. Additional Services
 
