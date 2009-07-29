@@ -17,13 +17,13 @@ This plugin produces two Sammy rules connected to two paths of your choosing. On
 
 h2. Usage, or, Twitter Authentication in 7 Easy Steps.
 
-1) Copy the mconstantine folder into your js folder.
+1) git submodule add git://github.com/jpick/Smart-OAuth-Client.git js/oauth-client
 
 2) In the file where you define your Sammy rules add the following:
 
 <pre>
 <code>
-  system.use("mconstantine.OAuthClient")
+  system.use("oauth-client.OAuthClient")
 
   OAuthClient.initialize({
       model                 : Person,           // which model to store the user info from the provider.
