@@ -95,4 +95,4 @@ GET("/welcome", function() {
 
 h2. Additional Services
 
-Currently this plugin has only been tested with Twitter. The underlying oauth.j lib has been tested with more services. If you need OAuth for additional services, just follow the same steps above (you'll have one OAuth.initialize for each service), but change the loginPath, callbackPath to something unique, then proceed as you were.
+Currently this plugin has only been tested with Twitter. The underlying oauth.js lib has been tested with more services. If you need OAuth for additional services, just follow the same steps above (you'll have one OAuth.initialize for each service), but change the loginPath, callbackPath to something unique, then proceed as you were.
