@@ -1,7 +1,7 @@
 h1. OAuthClient Plugin for Joyent Smart Platform Sammy
 
 Version: 0.1
-Created by: Matt Constantine (@thismatt on twitter, designmc at gmail, matt20120 on aim) with heavy oauth lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.  Additional modifications by Jim Pick (@jimpick on twitter/identica, jim@joyent.com)
+Created by: Matt Constantine (&#064;thismatt on twitter, designmc at gmail, matt20120 on aim) with heavy oauth lifting provided by the NetFlix OAuth javascript client. See oauth.js for the license.  Additional modifications by Jim Pick (&#064;jimpick on twitter/identica, jim&#064;joyent.com)
 
 Live example: <a href="http://oauth-test1.jimpick.com/">http://oauth-test1.jimpick.com/</a>
 
